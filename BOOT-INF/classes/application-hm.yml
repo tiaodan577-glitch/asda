@@ -1,0 +1,143 @@
+# todo 切生产环境时，需要取消创建合同接口测试代码WithHoldApiV2类中352行代码和AlipayTemplate类中47行支付默认金额
+server:
+    port: 8080
+
+h5:
+    domain: https://axkmbtest.caixinsc.com #H5域名
+    orderIndex: /pages/me/order #H5订单页面
+
+admin:
+    # 标识名称，应当是唯一，用于隔离同环境多套系统区分
+    flagName: hm
+    serverDomain: https://axktest.caixinsc.com/prod-api
+    signConcatRedirect: https://axktest.caixinsc.com/prod-api/appopen/toSign/   #签约合同后重定向接口
+
+#OSS存储
+oss:
+    local:
+        #文件域名
+        domain: http://localhost:8080
+        #存储路径
+        upload-file-path: D:/ruoyiVueS
+    aliyun:
+        #阿里云api的内或外网域名
+        endpoint: oss-cn-hangzhou.aliyuncs.com
+        #阿里云api的密钥access key id
+        access-key-id: LTAI5tKVXmFmHVqeefqppcAP
+        #阿里云api的密钥access key secret
+        access-key-secret: RyjEP9HamWH18WYgXXC83TPi1GGeJo
+        #阿里云api的bucket名称
+        bucket-name: hlkdev
+        #外部访问域名
+        domain: https://hlkdev.oss-cn-hangzhou.aliyuncs.com
+
+# 阿里云短信
+aliyuncode:
+    accessKeyId: LTAI5tKVXmFmHVqeefqppcAP
+    accessSecret: RyjEP9HamWH18WYgXXC83TPi1GGeJo
+    signName: 海南韵乐科技
+    templateCode: SMS_305133326
+    encodeKey: as8jhhg98sgsg#!@ #加密密钥
+    realName: #人脸实名相关 https://help.aliyun.com/zh/id-verification/financial-grade-id-verification/user-guide/activate-id-verification-for-financial-services?spm=a2c4g.11186623.help-menu-2401581.d_1_0.126ff32dzv0bBO&scm=20140722.H_143097._.OR_help-T_cn-DAS-zh-V_1
+        mapId: 1000012171 #场景id
+
+# 阿里云ocr识别
+aliyunocr:
+    AppCode: 4a00c7baa2ef4355b2532949528541da
+
+#代扣参数(v1)todo 已经弃用对接
+dk:
+    #代扣appId
+    appId: 6B180037ABBEBEA991D8B1232F8A8CA9
+    #代扣平台请求地址
+    serverAddres: https://axk.caixinsc.com
+    #代扣平台商户社会信用代码
+    merchantId: 91460000MABXL9J664
+    #代扣平台公司商户名称
+    companyName: 海南韵乐科技有限公司
+    #商户法人名称
+    leaseName: 陈洁
+    #商户支付宝uid
+    leaseAlipayUid: 2088650322321594
+    #代扣平台会员id
+    loginId: BNOIPGVM
+    #合同模板id
+    templateId: T20241025164940003259
+
+#代扣参数(v2-收单宝)
+dkv2:
+    verion: V2 #版本2版本2对应鑫雀服务商
+    plateform: 安心扣
+    #todo 代扣API调用token，在私有化部署系统后台参数设置中获取【认证token】
+    token: 2nHTTaj2Dxs2HaM1j1fRcesPSYTX2z5f
+    #代扣平台请求地址
+    serverAddres: https://sdbpre.caixinsc.com
+    #对应平台请求的真实ip
+    serverIp: 121.199.31.204
+    #代扣平台商户社会信用代码
+    merchantId: 91430104MADWX2C79U
+    #代扣平台公司商户名称
+    companyName: 长沙瀚鸣科技有限公司
+    #商户法人名称
+    leaseName: 陈洁
+    #商户法人身份证号
+    leaseIdNumber: 430223199511229541
+    #商户支付宝uid
+    leaseAlipayUid: 2088750609798922
+    #代扣平台会员id
+    loginId: 13549649279@163.com
+    #合同模板id---正式
+    templateId: T20241213162003003961
+    #CPS配置(此参数开通权限才会有用)
+    promotionId:
+    #CPS流量解密密钥(此参数开通权限才会有用)
+    cpsAESKey: 1111
+
+#支付宝H5网页应用配置(对应接入代扣主体的测试应用)
+alipay:
+    #应用ID
+    appId: 2021005106659451
+    #应用私钥
+    clientSecret: MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCa894CBWnywVowTmZ395aQpZmSWfDu/vUH4h0hfPs8pJTOtWtbSQt3MeD66RcwP/ZlYSuuMYFOt6+hZvacKhSkEMS4cAwfQCCFwFB3aZeLWGWzVO8c81AYJM7aIczUKN8fuWL6FXswz+arLpMVTOnxdL2ax75ZJI1wFfmVYGfrZ3WCMdg54y2apm8HyToYCF6QbIUWA4RSBu0Pb3uZb2hXVxjD9Aqeo6UJ5NkIE+qaosokacFAOoF/AD8HYKyDypwqj+/0rWpxS3iBQA3D9yZqRgw+Oi8BgoKTR1a3OTdr+wZkZ7xeCC7/9crlIweiiQgIHYEaWWdmlDdBgYSfUYdDAgMBAAECggEBAI+EwqNCmnAjEELfyt7g7o8JIuW/8n2anh9wGiUzWow/sCiJNmd1j24WP9iGXljtVW1vBAMyjR742W54LIBWJYoUkfB2r3OedMENcDo6Dggdlwzz5Qj+f7ftF75IQixbstXyYq9ZiCGc3ny9BbRb6e8ffqJG0ZJFXc9sOyBVC8unM2w6Wdzsq8kILTJ5JvVaHY1FGJrX1LxHAJXPWU9S2Y5LPZ1Ziwct0tboNRc70KgpVufdddkXH5Z4LYjN08xl3FB+9g2RIm2Of6ti88Ef1XvlO4TlntSUUSWfqZ81YIYKdfmck+RzJU2a449n8EaoCbAbltlQ43QiYKxZwymak6ECgYEA36ehfpgTLMIersk6TWUJJPjERsJ+lZdVBLVOto2tn56ErPh2PD+IoEXRf7bvHIoGyKo6MfDbsxMvUtxBmSdgm787GiODYtkIvQEvAdogylr+3mFNG0Sy7eDx/iryGVN5OGpnHu68uZBNt/j2iGjiK2zvtWI7eZOd2dy+zsLwf5ECgYEAsVys9eXjLlcQnOMgwYtyKXjO9sDMbGCr7HkmxC7IIKZYrqNZgFAdA2v1CMaKHq4yUDpR+77OgEqb/XFmBKDxpZm0Zie1YXxP8/epKtXEvJ0jw5JMeLJm1ryt8IwuSWPFTc0eWpoCI/C3ZjPB+9v8g/szB51yfRwjmfTd+UL+V5MCgYAE0nNr7FF1hJXuxM3p/0SsNGTe9bCO/x1JJbOVwgY9S8imhhDeiawjcH3s1//dyKgOyYTJsNy7xq0dhzwu1ieCFCRtEtjxV6aVlKHz00Ujt8SI/OYRsXB+KnxtM3XWz/LsIXcptpIBGjhiwA5osII313hvm7eWjnU3zkea458V0QKBgAGD+TZgsIBE3i95AV6mAmO4VIxnOVfzu4RZxKsIe01MHpXfb3RZOuY8lettRuDcPDHTTcAI8VrHSG3x+h0wAuCXX6M/05zxov1CsH9dNEEoVpXlOiIN5DMRiar0h7C42YbAqfG8PyhvdiG5b37nclDuZJE8Fy5afzNhlEP8/o9hAoGBANnKFiQy/hIeUDhNPOZSWi+mxB84z87tOFWqQpbbes0/ljL0UtNGrxcWUiFjn3ZbgnNhlBkRmnPZZ2azxLyHAS+1nHEUgOjtBc4Apgu9/AmnsJ7BZuduzQ9Nx2TX+HeA0mWuUmq2/GGfHOc3vYleA0gu2RcFUt9hGT39YSjpHmsG
+    #支付宝公钥
+    alipayPublicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxnfz46AsUDCcadZ5Q5iUP2EYadrQ2P+7Rg3fOv+La+56IGmPI6Vl3Bgi8Uj6BADQodJxwjnDi+LGRywTaWfEZglyxLlq2D8++5gcvvgkW1T2yA0WmdD+gwaw+iWagP3rkSMSgc7VhBT+MxWix0sy7UcuMyxLN4l/gnbdGU4Ck4t9rs8K5Rct+VKcnylzvaD92K4ITZmRk3lKOEyo6+2tMpSNm77dHjHT8HA/b9LfNGdJXSdyabNjiyyvPX0T9wTSAn5BriNr6MQxjfzMBMZvxSdE+dZ/rKifLeHV7npQVMK2wIah2pZP/woYaiTtpb2XjTo22DeqNkc4oyGCxKfThQIDAQAB
+    #授权回调地址（支付宝授权登录回到地址）
+    redirectUrl: https://axktest.caixinsc.com/prod-api/alipay/oauth/callback
+    #支付宝网关
+    geteWay: https://openapi.alipay.com/gateway.do
+    #异步支付通知地址
+    notifyUrl: https://axktest.caixinsc.com/prod-api/alipay/hlk/order/notify
+    # 页面跳转同步通知页面路径 需http://或者https://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
+    #    returnUrl: https://zhbexg.natappfree.cc/alipay/return
+    #签名方式
+    signType: RSA2
+    charset: UTF-8
+
+hfb:
+    # 汇付宝公钥
+    hfbPublicKey:
+    # 商家公钥
+    merchPublicKey:
+    # 商家私钥
+    merchPrivateKey:
+    # 汇付宝七位商户号
+    hfbMerchantId:
+    # 异步通知地址
+    payNotifyUrl:
+    # 签约通知地址
+    signNotifyUrl:
+    # 签约返回页面地址
+    signReturnUrl:
+
+
+hfbAliWap:
+    # MD5密钥，商户后台网关密钥下面第一个
+    key:
+    # 商户编号，（汇付宝商户内码：七位整数数字）
+    agentId:
+    # 异步通知地址
+    #  notifyUrl: https://axktest.caixinsc.com/stage-api/hfb/payNotify
+    notifyUrl: https://axktest.caixinsc.com/prod-api/hfbAliWap/payNotify
+    # 同步通知地址
+    #  returnUrl: https://axktest.caixinsc.com/stage-api/hfb/payNotify
+    returnUrl: https://axkmbtest.caixinsc.com/pages/me/payStore?orderCode=

@@ -1,0 +1,248 @@
+# 项目相关配置
+ruoyi:
+  # 名称
+  name: RuoYi-Vue-S
+  # 版本
+  version: 3.7.0
+  # 版权年份
+  copyrightYear: 2021
+  # 实例演示开关
+  demoEnabled: true
+  # 文件路径 示例（ Windows配置D:/ruoyi/uploadPath，Linux配置 /home/ruoyi/uploadPath）
+  profile: D:/ruoyi/uploadPath
+  # 获取ip地址开关
+  addressEnabled: false
+  # 验证码类型 math 数组计算 char 字符验证
+  captchaType: math
+  # 是否隐藏
+  hide: false
+
+# 开发环境配置
+server:
+  servlet:
+    # 应用的访问路径
+    context-path: /
+  tomcat:
+    # tomcat的URI编码
+    uri-encoding: UTF-8
+    # tomcat最大线程数，默认为200
+    max-threads: 800
+    # Tomcat启动初始化的线程数，默认值25
+    min-spare-threads: 30
+
+# 日志配置
+logging:
+  level:
+    com.ruoyi: debug
+    org.springframework: warn
+
+db:
+  ip: ${DB_IP:101.37.23.170}
+  mysqlPort: ${DB_MYSQL_PORT:4139}
+  mysqlDatabasename: ${DB_MYSQL_DATABASENAME:axktest}
+  mysqlUsername: ${DB_MYSQL_USERNAME:root}
+  mysqlPassword: ${DB_MYSQL_PASSWORD:devMysql123@}
+  redisPort: ${DB_REDIS_PORT:7779}
+  redisDatabase: ${DB_REDIS_DATABASE:0}
+  redisPassword: ${DB_REDIS_PASSWORD:devRedis123@}
+  mqPort: ${DB_MQ_PORT:5482}
+  mqUsername: ${DB_MQ_USERNAME:admin}
+  mqPassword: ${DB_MQ_PASSWORD:devRabbitMq123@}
+
+# Spring配置
+spring:
+  # 数据源配置
+  redis:
+    # 地址
+    host: ${db.ip}
+    # 端口，默认为6379
+    port: ${db.redisPort}
+    # 数据库索引
+    database: ${db.redisDatabase}
+    # 密码
+    password: ${db.redisPassword}
+    # 连接超时时间
+    timeout: 10s
+    lettuce:
+      pool:
+        # 连接池中的最小空闲连接
+        min-idle: 0
+        # 连接池中的最大空闲连接
+        max-idle: 8
+        # 连接池的最大数据库连接数
+        max-active: 8
+        # #连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1ms
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    druid:
+      # 主库数据源
+      master:
+        url: jdbc:mysql://${db.ip}:${db.mysqlPort}/${db.mysqlDatabasename}?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+        username: ${db.mysqlUsername}
+        password: ${db.mysqlPassword}
+      # 从库数据源
+      slave:
+        # 从数据源开关/默认关闭
+        enabled: false
+        url:
+        username:
+        password:
+      # 初始连接数
+      initialSize: 5
+      # 最小连接池数量
+      minIdle: 10
+      # 最大连接池数量
+      maxActive: 20
+      # 配置获取连接等待超时的时间
+      maxWait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      # 配置一个连接在池中最大生存的时间，单位是毫秒
+      maxEvictableIdleTimeMillis: 900000
+      # 配置检测连接是否有效
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      webStatFilter:
+        enabled: true
+      statViewServlet:
+        enabled: true
+        # 设置白名单，不填则允许所有访问
+        allow:
+        url-pattern: /druid/*
+        # 控制台管理用户名和密码
+        login-username: ruoyi
+        login-password: 123456
+      filter:
+        stat:
+          enabled: true
+          # 慢SQL记录
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: true
+        wall:
+          config:
+            multi-statement-allow: true
+  # 测试环境 MQ
+  rabbitmq:
+    host: ${db.ip}
+    port: ${db.mqPort}
+    username: ${db.mqUsername}
+    password: ${db.mqPassword}
+
+  # 资源信息
+  messages:
+    # 国际化资源文件路径
+    basename: i18n/messages
+  profiles:
+    active: devjd
+  # 文件上传
+  servlet:
+    multipart:
+      # 单个文件大小
+      max-file-size: 10MB
+      # 设置总上传的文件大小
+      max-request-size: 20MB
+  # 服务模块
+  devtools:
+    restart:
+      # 热部署开关
+      enabled: false
+# token配置
+token:
+  # 令牌自定义标识
+  header: Authorization
+  # 令牌密钥
+  secret: xi5NyU6nZhixing542896
+  # 令牌有效期（默认30分钟）
+  expireTime: 720
+
+mybatis-plus:
+  mapper-locations: classpath*:/com/ruoyi/**/*.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  type-aliases-package: com.ruoyi.**.domain
+  #typeEnumsPackage: com.baomidou.springboot.entity.enums
+  global-config:
+    db-config:
+      #主键类型 com.baomidou.mybatisplus.annotation.IdType";
+      id-type: AUTO
+      #字段策略 com.baomidou.mybatisplus.annotation.FieldStrategy"
+      select-strategy: NOT_EMPTY
+      insert-strategy: NOT_EMPTY
+      update-strategy: NOT_EMPTY
+      #逻辑删除配置（下面3个配置）
+      logic-delete-value: 0
+      logic-not-delete-value: 1
+  configuration:
+    jdbc-type-for-null: 'null'
+    #数据库大写下划线转换
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl #开启sql日志
+  configuration-properties:
+    dbType: mysql #设置全局属性用于控制数据库的类型
+
+
+# PageHelper分页插件
+pagehelper:
+  helperDialect: mysql
+  supportMethodsArguments: true
+  params: count=countSql
+
+# Swagger配置
+swagger:
+  # 是否开启swagger
+  enabled: true
+  # 请求前缀
+  pathMapping: /
+
+# 防止XSS攻击
+xss:
+  # 过滤开关
+  enabled: true
+  # 排除链接（多个用逗号分隔）
+  excludes: /system/notice
+  # 匹配链接
+  urlPatterns: /system/*,/monitor/*,/tool/*
+
+#文件上传配置
+#使用的上传存储空间,local本地,aliyun:阿里云
+oss:
+  client-type: aliyun
+  #默认上传目录
+  base_dir: userfiles
+  #允许的文件扩展名
+  allowed_extension: mp4,bmp, gif, jpg, jpeg, png,doc, docx, xls, xlsx, ppt, pptx,html,htm,txt,rar, zip, gz, bz2,pdf
+  #最大文件大小 50M
+  max_size: 52428800
+  #是否需要按照日期存放文件
+  needDatePath: false
+
+############### 爱签 ####################
+netSign:
+  apiAddress: https://prev.asign.cn/
+  appId: 316935604
+  privateKey: MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCHN8C6JZBg6iwb+m0sMASn0H4tqg4nak7VrxMvxM2ADzZTrAE4VRgW9HMdE5U7dDnQQ7MYJylOkrTFKHkHWUSdEYJ0SplMIKoXVBILsvDYJXHI6mG45r8/UbH3vwPjQxCx+oSsYmf3wwTunneoj1imK/1TKaUHs3cPkOKhPLJpNBNrxHEoxVa+2/HETi4jd5FBijOEQZ4Gq8vqcyR4RDT0l9bqXbnmWRYIWpjJxZ/JRaBI519pLmMUXU9uyQq3TRgLJHPeHZszPxgr5By1qlIv7tvLaeKHGWXdj011O/YP/9U4RP8ujycJU8tGPwY6GXLrYD8dImW6ll1MGoTTdMzdAgMBAAECggEAN+0FV3hl6M+yArhnIxmRM192cKifRgogJR1OUDmTzV19WMoRjx0S45ujaOlKldaSeuMlVd4MpaTkA4+jzzhKurQdQr//+46fCxsIg7I1DxEdqL3YQUOe4i+F7jQhBYQdiZ9V9H6XBdCxX4hHcX4oakJTemwFB9RgcB26vnl+SShRcE6CYfIpNT0QTfIUfYsDRuyBVsOSX4Wl6uv/Gxh7RspuVfwytPpC9uJpzoVFyjmvjLY0DaaIM3lmuxGXkZU26eAIAZyYtUrhQSgwe2RoYtQ9cc7g5zxGNjZBfKzLTHZDvT21G1ja00ACOzkcX1+uSJIjTswTsUQO/NfC6FTSgQKBgQD9lOw1rgzGai2Em01Du6GXyU3oMe5XVSlrTTlsRWPyEuXM4IP0MwuPCbLlRjOccF3GsMjDro7IbBKJqnag6Ij1/2odsKgmsu8j4djg6UbeMKTYJgg3/SYbcrLgLCfitWxKeKIIdCqziheHOeFrfHNloKzvNOZhQUWWmOvlvoPNrQKBgQCIgd1JvHLo7MpUWYGjhPxnzL8AleHIDXDfbaBhQxr7qKdulGUgmeNkRCv5F2v31HGDg6CmiOcP1+7zvOBupqhmR+E61HfLVYh24tc3m+lR94BCo8XdVG1f0FifpzLdVr77/dyNbpK1TfwC0ElcBoCUa4Gd6Ls6nYvu+zK0KSyB8QKBgQCcWa4qit4lmGHoWTkSgiXoSJ5YhDDIeCHJnxvAvigZob0+zU+Oycper0Q2SUqZMk8fqvCedopi2P+1Ef2CyN1pj8oF9F45PipknWPziOHBLYz2GL0IiHVuhxHzVkZhaisS375IKBgMCyDmp7FtbJZaGu+FrcA+Rth5OmB4jzcFIQKBgGRMTuRzs1aTTSJm1YrpFm/KD3kFp2xO++Uebl2oabYIuGTWYetvRpWQRWLzI6BnlrQTzcEvC98nQGoUGC8VAtyL6eBI5nAfO3Jmv80bIHbaTIIqRSKXevmQYt2DgysAJrmOUDQWz3KphwYmNhCIsoba6tS0gITT51JDfYDEU/BxAoGAaQpK/iu3U9beuvtsWCNY5dNV9mawSwKvDA5bfs8fcfdq0FAcz/evfn91G59wIZuAnHeJ6Ba/X4VCwebhvzNxVFnR9qlGhQvRsHP7vOfzC0vYYm0uNtDoEMMMVSqaIrxV2coBw7D/eNAlbAVbe5shyemDQ2bI5t0S3UCQTf9fPzw=
+  publicKey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBALwxjHOCmoY9N5h+uhWYdmES4920yTvWUERtkz+ac8KZF2dVgC5QaWZhmEz/nw27Ln6AP90ZCMPi+iNF1m9mhNECAwEAAQ==
+
+
+--- #################### Flyway 核心配置 ####################
+spring:
+  # Flyway 核心配置
+  flyway:
+    enabled: true  # 是否启用 Flyway（默认 true，可关闭）
+    baseline-on-migrate: true  # 对非空数据库执行基线（首次迁移已有数据的库时必须设为 true）
+    baseline-version: 1.0.0  # 基线版本（默认 1，若已有数据，设为 0 避免冲突，这里项目已经运行已有数据了，基线版本从1.0.0开始，不初始化数据）
+    locations: classpath:db/migration  # 迁移脚本存放路径（默认值，可自定义）
+    encoding: UTF-8  # 脚本编码
+    clean-disabled: true  # 禁用 clean 命令（防止误删库，生产环境必须设为 true）
+    validate-on-migrate: true  # 核心配置：关闭「迁移时校验」（生产环境慎用，建议仅临时解决）
+    out-of-order: false  # 是否允许乱序迁移（默认 false，推荐保持顺序）
+    table: flyway_schema_history  # Flyway 版本记录表名（默认，可自定义）
+    # 若需忽略特定迁移版本（用逗号分隔）
+    # ignore-migration-patterns: 1.0.0,2.0.0

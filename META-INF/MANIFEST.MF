@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Created-By: Maven JAR Plugin 3.4.1
+Build-Jdk-Spec: 17
+Main-Class: org.springframework.boot.loader.JarLauncher
+Start-Class: com.ruoyi.RuoYiApplication
+Spring-Boot-Version: 2.1.1.RELEASE
+Spring-Boot-Classes: BOOT-INF/classes/
+Spring-Boot-Lib: BOOT-INF/lib/
+

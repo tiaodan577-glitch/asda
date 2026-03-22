@@ -1,0 +1,1 @@
+ALTER TABLE flow_of_funds ADD COLUMN pay_channel VARCHAR(32) COMMENT '代扣渠道 ALIPAY JDPAY';

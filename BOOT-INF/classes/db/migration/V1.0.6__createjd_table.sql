@@ -1,0 +1,1 @@
+ALTER TABLE jd_file MODIFY COLUMN biz_scene VARCHAR(64);
