@@ -37,17 +37,6 @@ logging:
     org.springframework: warn
 
 db:
-  ip: ${DB_IP:101.37.23.170}
-  mysqlPort: ${DB_MYSQL_PORT:4139}
-  mysqlDatabasename: ${DB_MYSQL_DATABASENAME:axktest}
-  mysqlUsername: ${DB_MYSQL_USERNAME:root}
-  mysqlPassword: ${DB_MYSQL_PASSWORD:devMysql123@}
-  redisPort: ${DB_REDIS_PORT:7779}
-  redisDatabase: ${DB_REDIS_DATABASE:0}
-  redisPassword: ${DB_REDIS_PASSWORD:devRedis123@}
-  mqPort: ${DB_MQ_PORT:5482}
-  mqUsername: ${DB_MQ_USERNAME:admin}
-  mqPassword: ${DB_MQ_PASSWORD:devRabbitMq123@}
 
 # Spring配置
 spring:
